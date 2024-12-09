@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 abstract public class SimpleDataRepository <T extends Entity, ID extends Long> implements DataRepository<T, ID>{
 
-    private List<T> dataList = new ArrayList<T>();
+    private List<T> dataList = new ArrayList<T>();  //저장 공간
 
-    private static long index = 0;
+    private static long index = 0; //unique한 ID
 
     private Comparator<T> sort = new Comparator<T>() {
         @Override
@@ -35,9 +35,9 @@ abstract public class SimpleDataRepository <T extends Entity, ID extends Long> i
 
         if(prevData.isPresent()){
             // 기존 데이터 있는 경우 업데이트
-            // Optional<UserEntity>
-            dataList.remove(prevData.get());
-            dataList.add(data);
+            // get을 꼭 해줘야함, 안 하면 Optional<UserEntity>
+            dataList.remove(prevData.get()); // id로 데이터 삭제
+            dataList.add(data); // 다시 넣음
         }else{
             // 없는 경우
             index++;
